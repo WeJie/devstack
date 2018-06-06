@@ -48,7 +48,7 @@ docker_exec() {
     /edx/app/$app/$repo/manage.py $cmd
     "
 
-    docker-compose exec "$service" bash -c "$CMDS"
+    ${WINPTY} docker-compose exec "$service" bash -c "$CMDS"
 }
 
 provision_ida() {
@@ -60,22 +60,22 @@ provision_ida() {
 
     cmd="$cmd -c \"$PROGRAM_SCRIPT\""
 
-    docker_exec "$service" "$cmd" "$3" "$4"
+    ${WINPTY} docker_exec "$service" "$cmd" "$3" "$4"
 }
 
 if [ "$1" = "lms" -o -z "$1" ]; then
     notice Adding program support to LMS...
-    ${WINPTY} provision_ida lms "lms shell" edxapp edx-platform
+    provision_ida lms "lms shell" edxapp edx-platform
 fi
 
 if [ "$1" = "discovery" -o -z "$1" ]; then
     notice Adding demo program to Discovery...
-    ${WINPTY} provision_ida discovery
+    provision_ida discovery
 fi
 
 if [ "$1" = "cache" -o -z "$1" ]; then
     notice Caching programs inside the LMS...
-    ${WINPTY} docker_exec lms "lms cache_programs" edxapp edx-platform
+    docker_exec lms "lms cache_programs" edxapp edx-platform
 fi
 
 reset_color
