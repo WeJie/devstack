@@ -25,4 +25,4 @@ System Requirements
 Provisioning Devstack
 ---------------------
 
-Follow the instructions in the mian README, but skip "make requirements"
+Follow the instructions in the main README. Run the make commands in git bash. Skip the "make requirements" step.
